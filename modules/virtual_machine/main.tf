@@ -43,5 +43,5 @@ resource "azurerm_network_interface" "main" {
     subnet_id                     = data.azurerm_subnet.internal[each.key].id
     private_ip_address_allocation = "Dynamic"
   }
-    depends_on = [ azurerm_windows_virtual_machine.vm1 ]
+    
 }
