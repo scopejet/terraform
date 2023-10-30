@@ -1,0 +1,59 @@
+pool:
+
+  name: Azure Pipelines
+
+#Your build pipeline references an undefined variable named ‘Parameters.provider’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+
+
+
+steps:
+
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@1
+
+  displayName: 'Install Terraform latest'
+
+
+
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
+
+  displayName: 'Terraform : init'
+
+  inputs:
+
+    provider: '$(Parameters.provider)'
+
+    backendServiceArm: connectiontoazure
+
+    backendAzureRmResourceGroupName: 'Embee-KANTHARAJU-RG'
+
+    backendAzureRmStorageAccountName: jartank
+
+    backendAzureRmContainerName: terraformbackend
+
+    backendAzureRmKey: 'RgadWnxiYelr1FWA3oYRfUUUH1hIZLS8VUGqe/Liuo4meHHxwSgoN5hPCNkqgRCLlXPGqwguj5Wn+AStjGlEqA=='
+
+
+
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
+
+  displayName: 'Terraform : validate'
+
+  inputs:
+
+    command: validate
+
+
+
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+
+  displayName: 'Terraform : plan'
+
+  inputs:
+
+    command: plan
+
+    environmentServiceNameAzureRM: connectiontoazure
+
+
+
+
